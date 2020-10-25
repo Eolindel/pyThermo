@@ -35,6 +35,9 @@ H = sum_i n_i(T)H_i(T)
 
 Then, the hypothesis means that plotting T =f(time) is equivalent to plotting the inverse function of T with respect to the enthalpy. A linear tranformation is done to convert the enthalpy range to a time between 0 and 1.
 
+
+All thei thermodynamic values are taken from the NIST website.
+
 Informations
 ------------
 Author : Martin Vérot  from the ENS de Lyon, France, with the help of some scripts to create the buttons and sliders taken from https://github.com/araoux/python_agregation (written by P Cladé, A Raoux and F Levrier)
