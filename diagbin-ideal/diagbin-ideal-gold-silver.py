@@ -88,7 +88,7 @@ def FindTliqMel(x0,arr):
     Finding the temperature corresponding to the Liquefaction point and Melting point from the solution of the binary diagram for the given initial composition : xG = x0
         x0 given molar fraction of the overall system
         arr solutions for the equation of the binary diagram
-    Return two values : the Temperature of the dew point and the Melting temperature
+    Return two values : the Temperature of the solidifying point and the Melting temperature
     """
     miny = np.abs(arr[:,2]-x0)
     indixy = np.argmin(miny)
@@ -99,7 +99,7 @@ def FindTliqMel(x0,arr):
 def SysComposition(Temps,arr,TempRange,x0):
     """
     Returns the composition of the system (total = 1 mol) as a function of temperature 
-        Temps are the dew point and Melting temperatures for the given composition
+        Temps are the solidifying point and Melting temperatures for the given composition
         arr solutions for the equation of the binary diagram
         Temprange the range of temperatures for which we can solve the problem
         x0 given molar fraction of the overall system
@@ -121,7 +121,7 @@ def SysComposition(Temps,arr,TempRange,x0):
     x[TempRange<=Temps[1]]=x0 #below the Melting point, the liquid has the stated composition
     #in the liquid vapor part, we have to read the xG value in the array containing the solution
     x[(TempRange<=Temps[0]) & (TempRange > Temps[1])]=arr[(TempRange<=Temps[0]) & (TempRange > Temps[1]),0]
-    #yG finding the vapor composition of the vapor phase at each temperature
+    #yG finding the vapor composition of the liquid phase at each temperature
     y = np.zeros_like(TempRange)
     y[TempRange>Temps[0]]=x0
     y[(TempRange<=Temps[0]) & (TempRange > Temps[1])]=arr[(TempRange<=Temps[0]) & (TempRange > Temps[1]),2]
@@ -130,13 +130,13 @@ def SysComposition(Temps,arr,TempRange,x0):
 def plot_data(x):
     Temps = FindTliqMel(x,arrsol)
     compSys = SysComposition(Temps,arrsol,TempRange,x) 
-    #Amount of Gold in the liquide phase
+    #Amount of Gold in the solid phase
     nGs = compSys[1]*compSys[0]
-    #Amount of Silver in the liquide phase
+    #Amount of Silver in the solid phase
     nSs = (1-compSys[1])*compSys[0]
-    #Amount of benzene in the vapor phase
+    #Amount of gold in the liquid phase
     nGl = compSys[2]*(1-compSys[0])
-    #Amount of toluene in the vapor phase
+    #Amount of silver in the liquid phase
     nSl = (1-compSys[2])*(1-compSys[0])
     #Computing the molar enthalpy as a function of the system composition
     Hm = molarEnthalpy(Hs,Hl,Cps,Cpl,TempRange)
